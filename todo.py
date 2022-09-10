@@ -20,7 +20,7 @@ def Add():
     work = e2.get()
     venue = e3.get()
  
-    mysqldb=mysql.connector.connect(host="localhost",user="root",password="swastikabose",database="todo")
+    mysqldb=mysql.connector.connect(host="localhost",user="root",password="Sambit03@",database="todo")
     mycursor=mysqldb.cursor()
  
     try:
@@ -30,6 +30,7 @@ def Add():
        mysqldb.commit()
        lastid = mycursor.lastrowid
        messagebox.showinfo("information", "Employee inserted successfully...")
+       listBox.insert("", "end", values=(time, work, venue))
        e1.delete(0, END)
        e2.delete(0, END)
        e3.delete(0, END)
@@ -44,7 +45,7 @@ def update():
     time = e1.get()
     work = e2.get()
     venue = e3.get()
-    mysqldb=mysql.connector.connect(host="localhost",user="root",password="swastikabose",database="todo")
+    mysqldb=mysql.connector.connect(host="localhost",user="root",password="Sambit03@",database="todo")
     mycursor=mysqldb.cursor()
  
     try:
@@ -54,8 +55,13 @@ def update():
 
        mysqldb.commit()
        lastid = mycursor.lastrowid
-       messagebox.showinfo("information", "Record Updateddddd successfully...")
+       messagebox.showinfo("information", "Record Updated successfully...")
+       
+       indexlist=listBox.get_children()
+       for index in indexlist:
+              listBox.delete(index)
  
+       show()
        e1.delete(0, END)
        e2.delete(0, END)
        e3.delete(0, END)
@@ -68,18 +74,20 @@ def update():
        mysqldb.close()
  
 def delete():
-    studid = e1.get()
+    time = e1.get()
  
-    mysqldb=mysql.connector.connect(host="localhost",user="root",password="swastikabose",database="todo")
+    mysqldb=mysql.connector.connect(host="localhost",user="root",password="Sambit03@",database="todo")
     mycursor=mysqldb.cursor()
  
     try:
-       sql="delete from todo1 where work=%s"
-       val = (studid,)
+       sql="delete from todo2 where time=%s"
+       val = (time,)
        mycursor.execute(sql, val)
        mysqldb.commit()
        lastid = mycursor.lastrowid
        messagebox.showinfo("information", "Record Delete successfully...")
+       index=listBox.selection()
+       listBox.delete(index)
  
        e1.delete(0, END)
        e2.delete(0, END)
@@ -94,7 +102,7 @@ def delete():
        mysqldb.close()
  
 def show():
-        mysqldb = mysql.connector.connect(host="localhost", user="root", password="swastikabose", database="todo")
+        mysqldb = mysql.connector.connect(host="localhost", user="root", password="Sambit03@", database="todo")
         mycursor = mysqldb.cursor()
         mycursor.execute("select * from todo2")
         records = mycursor.fetchall()
